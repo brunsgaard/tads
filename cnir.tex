@@ -83,21 +83,44 @@
 \begin{frame}[fragile]
   \frametitle{Vicinity Balls}
 
-  %TODO HB
+  For every integer $k \geq 1$, and for a node $u \in V$, let the \textit{vicinity} of $u$, denoted by $B_k(u)$, be the set consisting of $u$ and the $k$ closest nodes to $u$.
+
+  Set $k=[4 \sqrt{n}log\; n]$ and denote $B(u) = B_k(u)$.\\
+  Denote $b(u)$ the radius of $B(u)$, $b(u)=max_{w\in B(u)} d(u,w)$.
+
+  %HB
 
 \end{frame}
 
 \begin{frame}[fragile]
   \frametitle{Coloring}
 
-  %TODO HB
+  Partition nodes into the color sets $C_1,\dots,C_{\sqrt{n}}$, with the following properties:
+  \begin{enumerate}
+    \item Every color-set has at most $2 \sqrt{n}$ nodes.
+    \item Every node has in its vicinity at least one node from every color-set.
+  \end{enumerate}
+
+  If node $u\in C_i$, it has ``color $i$''. Denote $c(u)=i$.
+
+  This can be constructed in polynomial-time.
+
+  If every node independently chooses a random color, the properties holds with high probability.
+
+  %HB
 
 \end{frame}
 
 \begin{frame}[fragile]
   \frametitle{Hashing Names To Colors}
 
-  %TODO HB
+  Assuming a mapping $h$ from node names to colors is balanced such that at most $O(\sqrt{n})$ names map to the same color.
+
+  In other words, $h(u)=c(u)$ for each node $u\in V$.
+
+  Each node $u\in V$ should be able to compute $h(w)$ for any destination $w$.
+
+  %HB
 
 \end{frame}
 
@@ -106,7 +129,14 @@
 \begin{frame}[fragile]
   \frametitle{Storing}
 
-  %TODO HB
+  Every node $u$ stores the following:
+
+  \begin{enumerate}
+    \item The names of all the nodes in the vicinity $B(u)$ and what port number to use to reach them.
+    \item The names of all nodes $v$ such that $c(u)=h(v)$ and what port number to use to reach them.
+  \end{enumerate}
+
+  %HB
 
 \end{frame}
 
@@ -114,7 +144,14 @@
 \begin{frame}[fragile]
   \frametitle{Routing}
 
-  %TODO HB
+  Routing from $u$ to $v$:
+  \begin{enumerate}
+    \item If $v\in B(u)$ or $c(u)=h(v)$, then $u$ routes directly to $v$ with stretch 1 (i.e. min cost)
+    \item Otherwise, $u$ forwards the packet to $w\in B(u)$ such that $c(w)=h(v)$. Then from $w$ the packet goes directly to $v$.\\
+        The stretch is at most $3$ since $d(u,w) + d(w,v) \leq d(u,v)+2d(u,v)$.
+  \end{enumerate}
+
+  %HB
 
 \end{frame}
 
@@ -131,9 +168,18 @@
 
 \begin{frame}[fragile]
   \frametitle{Landmarks}
-
+  \begin{itemize}
+    \item Designate one color to be the landmark color.
+    \item Let $L$ denote the set of nodes with this color.
+    \item Because of the way coloring works:
+    \begin{itemize}
+        \item $|L| \leq 2 \sqrt{n}$
+        \item For every $v\in V$, $B(v)\cap L \neq \emptyset$
+    \end{itemize}
+    \item For a node $v\in V$, let $\ell_v$ denote the closest landmark node in $B(v)$.
+  \end{itemize}
   %HB
-  %TODO 3.6
+  %3.6
 
 \end{frame}
 
@@ -175,9 +221,25 @@
 \begin{frame}[fragile]
   \frametitle{Results}
 
+  \begin{description}
+    \item[Stretch] 3
+    \item[header size] $O(log^2/log\;log\;n)$ bits
+    \item[Routing information per node] $\tilde{O}(\sqrt{n})$ bits
+    \item[Routing] $O(1)$ time
+    \item[Construction time] $\tilde{O}(n|E|)$
+  \end{description}
+
   %HB
   %TODO present section 1.1, i.e. construction time, runing time, space complexity
+\end{frame}
 
+\begin{frame}[fragile]
+  \frametitle{Results}
+  Improves the stretch of Arias et al. [2003] from 5 to 3, the known lower bound.
+
+  Answers the open problem from 1989 [Awerbuch et al. 1990].
+
+  %HB
 \end{frame}
 
 %Results
