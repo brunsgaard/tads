@@ -220,8 +220,10 @@
   $\mu(T(u),v)$ if and only if $u \in B(v)$. Notice that the set of nodes that
   maintain $\mu(T(u),\dot)$ is a subtree of $T(u)$ that contains $u$
   \begin{block}{Lemma 3.4}
-    If $x /in B(y)$, then given the label $\lambda(T(x), y)$, node $x$ can
+    \begin{quote}
+    If $x \in B(y)$, then given the label $\lambda(T(x), y)$, node $x$ can
     route to node $y$ along a minimum cost path
+    \end{quote}
   \end{block}
 \end{frame}
 
@@ -269,9 +271,16 @@
 
 \begin{frame}[fragile]
   \frametitle{Routing}
+  \begin{block}{Routing from u to v is done in the following manner:}
+    \begin{enumerate}
+        \item If $v \in B(u)$ or $v \in L$ ($v$ is a landmark node) or $c(u) =
+            h(v)$, then $u$ routes to $v$ using its own information.
+        \item Otherwise, $u$ forwards the packet to $w \in B(u)$ such that
+            $c(w) = h(v)$. Then from $w$ the packet goes to $v$ using $w$’s
+            routing information.
+    \end{enumerate}
+  \end{block}
 
-  %JB
-  %TODO
 
 \end{frame}
 
