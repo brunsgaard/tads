@@ -186,10 +186,17 @@
 
 \begin{frame}[fragile]
   \frametitle{Routing on Trees}
-
-  %JB
-  %TODO 3.5
-
+    \begin{block}{Fraigniaud and Gavoille 2001, Thorup og Zwick 2001B}
+        \begin{quote}
+        For every weighted tree T with n nodes there exists a labeled routing
+        scheme that, given any destination label, routes optimally on T from any
+        source to the destination. The storage per node in T, the label size, and
+        the header size are $O(log2 n/ log log n)$ bits. Given the information of
+        a node and the label of the destination, routing decisions take constant
+        time.
+        \end{quote}
+    \end{block}
+    Okay, seems good. So we can route with these properties. Hurra!
 \end{frame}
 
 \begin{frame}[fragile]
@@ -204,9 +211,6 @@
     \end{itemize}
     \item For a node $v\in V$, let $\ell_v$ denote the closest landmark node in $B(v)$.
   \end{itemize}
-  %HB
-  %3.6
-
 \end{frame}
 
 \begin{frame}[fragile]
