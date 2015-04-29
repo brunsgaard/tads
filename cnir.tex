@@ -267,8 +267,6 @@
 \end{frame}
 
 
-
-
 \begin{frame}[fragile]
   \frametitle{Routing}
   \begin{block}{Routing from u to v is done in the following manner:}
@@ -284,6 +282,58 @@
 
 \end{frame}
 
+
+\begin{frame}[fragile]
+  \frametitle{Routing}
+  \begin{block}{Routing from u to v is done in the following manner:}
+    \begin{enumerate}
+        \item If $v \in B(u)$ or $v \in L$ ($v$ is a landmark node) or $c(u) =
+            h(v)$, then $u$ routes to $v$ using its own information.
+        \item Otherwise, $u$ forwards the packet to $w \in B(u)$ such that
+            $c(w) = h(v)$. Then from $w$ the packet goes to $v$ using $w$’s
+            routing information.
+    \end{enumerate}
+  \end{block}
+
+\end{frame}
+
+
+\begin{frame}[fragile]
+  \frametitle{Theorem 3.5}
+    Let $s,t\in V$ be any two nodes. The route of the scheme from $s$ to $t$ has stretch at most 3.
+
+    Proof: Three cases to consider.
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Analysis}
+    The taget is inside the source vicinity.
+    \begin{enumerate}
+        \item[1] If $t\in B(s)$ or $t\in L$, then $s$ routes on a minimum cost path directly to $t$.
+    \end{enumerate}
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Analysis}
+    The source and target vicinities are far apart.
+    \begin{enumerate}
+        \item[2] let $z$ be a node such that $z\in B(s)$ and $c(z)=h(t)$. For the case $c(s)=h(t)$, set $z=s$. Let $p(z,t)$ be the cost of the path chosen by $z$ as the lowest cost path from $z$ to $t$ (from options 4(a) and 4(b)).
+
+        On every min cost path from $s$ to $t$ there is a node $y$ such that $y\not\in B(s)$ and $y\not\in B(t)$. In this case, $b(s)+b(t)\leq d(s,t)$.
+
+        From 4(a) the cost $d(s,z)+p(z, t)$ of the path taken by the routing scheme is bounded by the cost of the path $s\leadsto z\leadsto \ell_t\leadsto t$, where $u\leadsto v$ is the min cost path from $u$ to $v$.\\
+        Thus $d(s,z)+p(z,t) \leq d(s,z)+d(z,\ell_t)+d(\ell_t,t) \leq b(s) + [d(s,t) + b(t)] + b(t) \leq 3d(s,t)$.
+    \end{enumerate}
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Analysis}
+    The source and atarget vicinities are close.
+    \begin{enumerate}
+        \item[3] There exists a min cost path in which every node is in $B(s)\cup B(t)$. Let $(x,y)$ be an edge on this path such that $x\in B(s)$ and $y\in B(t)$. From 4(b), the cost $d(s,z)+p(z,t)$ of the path taken is bounded by the cost of path $s\leadsto z\leadsto x\rightarrow y \leadsto t$.\\
+        Thus $d(s,z)+p(z,t) \leq d(s,z) + d(z,s) + d(s,t) \leq b(s)+b(s)+d(s,t)\leq 3d(s,t)$.
+    \end{enumerate}
+\end{frame}
 
 \section{Results}
 
