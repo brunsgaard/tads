@@ -215,10 +215,14 @@
 
 \begin{frame}[fragile]
   \frametitle{Partial shortest path trees}
-
-  %JB
-  %TODO 3.7
-
+  For any node $u$, let $T(u)$ denote a singlesource minimum-cost-path tree
+  rooted at $u$. In a partial shortest path tree, every node $v$ maintains
+  $\mu(T(u),v)$ if and only if $u \in B(v)$. Notice that the set of nodes that
+  maintain $\mu(T(u),\dot)$ is a subtree of $T(u)$ that contains $u$
+  \begin{block}{Lemma 3.4}
+    If $x /in B(y)$, then given the label $\lambda(T(x), y)$, node $x$ can
+    route to node $y$ along a minimum cost path
+  \end{block}
 \end{frame}
 
 \begin{frame}[fragile]
