@@ -1,0 +1,41 @@
+\section{The Stretch 3 Scheme}
+We shall firstly introduce a stretch 3 scheme for complete graphs and then generalize this to generic graphs.
+
+\subsection{Vicinity Balls}
+We introduce vicinity balls as the notion of areas containing the $k$ closest nodes. For every integer $k \geq 1$, and for a node $u \in V$, let the \textit{vicinity} of $u$, denoted by $B_k(u)$, be the set consisting of $u$ and the $k$ closest nodes to $u$.
+
+Set $k=[4 \sqrt{n}log\; n]$ and denote $B(u) = B_k(u)$. Denote $b(u)$ the radius of $B(u)$, $b(u)=max_{w\in B(u)} d(u,w)$.
+
+\subsection{Coloring}
+We introduce coloring.
+Partition nodes into the color sets $C_1,\dots,C_{\sqrt{n}}$, with the following properties:
+\begin{enumerate}
+    \item Every color-set has at most $2 \sqrt{n}$ nodes.
+    \item Every node has in its vicinity at least one node from every color-set.
+\end{enumerate}
+
+If node $u\in C_i$, it has ``color $i$'' and we denote this $c(u)=i$. The coloring can be done in polynomial time.
+
+If every node independently chooses a random color, the properties holds with high probability.
+%TODO prove this
+
+\subsection{Hashing Names To Colors}
+Assuming a mapping $h$ from node names to colors is balanced such that at most $O(\sqrt{n})$ names map to the same color. Each node $u\in V$ should be able to compute $h(w)$ for any destination $w$ in constant time. Note that this hashing is for node names and not the node itself. Thus a node now has a node color and a name color.
+
+\section{Stretch 3 for Complete Graph}
+\subsection{Storing}
+Every node $u$ stores the following:
+\begin{enumerate}
+    \item The names of all the nodes in the vicinity $B(u)$ and what port number to use to reach them.
+    \item The names of all nodes $v$ such that $c(u)=h(v)$ and what port number to use to reach them.
+\end{enumerate}
+
+\subsection{Routing}
+Routing from $u$ to $v$ is done in the following manner:
+\begin{enumerate}
+    \item If $v\in B(u)$ or $c(u)=h(v)$, then $u$ routes directly to $v$ with stretch 1 (i.e. min cost)
+    \item Otherwise, $u$ forwards the packet to $w\in B(u)$ such that $c(w)=h(v)$. Then from $w$ the packet goes directly to $v$.\\
+        The stretch is at most $3$ since $d(u,w) + d(w,v) \leq d(u,v)+2d(u,v)$.
+\end{enumerate}
+
+%TODO include example
