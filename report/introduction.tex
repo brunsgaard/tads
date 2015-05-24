@@ -125,3 +125,27 @@ experiments before I present my conclusions in \autoref{sec:conclusion}.
   \end{figure}
 \end{frame}
 
+
+
+
+\begin{frame}[fragile]
+  \frametitle{Name-Independent Rounting with min stretch}
+    Given a weighted undirected network with arbitrary node names, we present
+    a compact routing scheme, using a $\tilde{O}(\sqrt{n})$ space routing
+    table at each node and routing along paths of stretch 3.
+
+    It is known that no compact routing using $o(n)$ space per node can route
+    with stretch below 3. Also, it is known that any stretch below 5 requires
+    $\Omega(\sqrt{n})$ space per node.
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Setup}
+    Consider an $n$-node weighted undirected graph $G=(V,E,\omega)$.
+
+    Each node $v\in V$:
+    \begin{itemize}
+        \item is given a unique name with $O(log\; n)$ bits.
+        \item each outgoing edge is given a unique port name in $\{1,\dots,deg(v)\}$.
+    \end{itemize}
+\end{frame}
