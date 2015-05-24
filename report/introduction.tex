@@ -63,3 +63,65 @@ introduction to approximate distance oracles. In \autoref{sec:implementation}
 I discuss obstacles and solution regarding the implementation and development
 process. Finally in \autoref{sec:experiments} I conduct and discuss my
 experiments before I present my conclusions in \autoref{sec:conclusion}.
+
+
+
+
+\section{Lets talk a bit about routing}
+
+\begin{frame}[fragile]
+  \frametitle{Routing Scheme}
+    A routing scheme is a distributed algorithm that allows any
+    source node to route messages to any destination node, given
+    destination node's name
+
+    \begin{description}
+        \item[Input] a network $G$ (a weighted connected graph)
+        \item[Output] a routing scheme for G
+    \end{description}
+\end{frame}
+
+\begin{frame}{XY-routing}
+  \begin{figure}
+    \includegraphics[scale=0.3]{images/xyrouting.png} 
+  \end{figure}
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Routing Scheme}
+     
+  \begin{block}{Example: Trivial routing on min cost paths}
+      \begin{itemize}
+        \item On each node, for each of the possible $(n-1)$ destinations,
+        store a port number leading to the next node on a min cost path to the
+        destination.
+        \item Requires each node to store $\Omega (n\; log\; n)$ bits.
+        \item Does not scale very well.
+      \end{itemize}
+  \end{block}
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Minimizing parameters}
+  When working with routing, two factors are normally of interest:
+  \begin{description}
+    \item[Stretch] The max ratio over all source-destination pairs between the
+        cost of the path taken by the routing scheme and the cost of a min
+        cost path.
+    \item[Memory] The max number of bits over all nodes stored for the routing
+        scheme. (ballanced is preferred)
+  \end{description}
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Labeled Routing or Name-Independent Routing}
+
+  In labeled routing we can choose a label for each vertex.
+  Lets use coordinates. Now we can easily route. If an aversery
+  label the vertices randomly, routing gets harder.
+
+  \begin{figure}
+    \includegraphics[scale=0.3]{images/xyrouting.png} 
+  \end{figure}
+\end{frame}
+
