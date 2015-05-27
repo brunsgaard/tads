@@ -45,7 +45,7 @@ to distances, there are two parameters that routing schemes seek to minimize.
 This article presents a routing scheme that uses $\tilde{O}(\sqrt(n))$
 routing table space per vertex, and routes along paths of stretch-3. Note that $\tilde{O}()$ abstracts away factors of logarithmic size, just like $O()$ abstracts away constants.
 
-\section*{Labeled Routing or Name-Independent Routing}
+\section{Labeled Routing or Name-Independent Routing}
 In the literature we distinguish between \emph{labeled routing} or
 \emph{name-independent routing}. To illustrate the differences we look at a complete
 grid and imagine that the intersections is vertices and the lines are edges, as seen in \autoref{fig:labeledrouting}.
@@ -58,7 +58,8 @@ this scenario the available ports for each vertex would be a subset of $\{+y,
 -y, +x, -x\}$.
 \begin{figure}[htbp]
     \centering
-    \includegraphics[scale=0.3]{images/xyrouting.png} 
+    \includegraphics[scale=0.3]{images/xyrouting.png}
+    \caption{x-y-routing}
     \label{fig:labeledrouting}
 \end{figure}
 
