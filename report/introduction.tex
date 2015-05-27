@@ -1,5 +1,4 @@
 \chapter{Introduction to routing schemes}
-\label{sec:introduction}
 
 Routing is one of the most fundamental problems in the area of distributed
 networking. The goal in this problem is to find a distributed algorithm that
@@ -10,45 +9,63 @@ Formally, a routing scheme is comprised of two phases. The first phase is
 called the preprocessing phase. In this phase $G$ is preprocessed and the
 derived routing information is stored locally with the relevant vertices.
 
-In the second phase, the routing phase, the routing scheme allows any vetex to
-send messages to any other vertex in a distributed manner.
+In the second phase - the routing phase - the routing scheme allows any vetex
+to route messages to any vertex in a distributed manner only based on label of
+the destination vertex.
 
-A naive approach to rountign wo
+A naive approach to routing, is to preprocess a graph by running a SSSP
+algorithm from each vertex $v \in V$ and at each vertex $v$ store a hashmap
+mapping any vertex in $V$ to an outgoing edge from $v$, also
+referred to as a port.
+
+In the routing phase a vertex will only need to look at the destination label
+of the message. If the destination label match the one of the vertex then we
+are done, otherwise lookup what port to use and forwarding the message.
+
+This approach will ensure a routing of stretch-1, and the lookup performed at
+each vertex can be done in constant time. But this approach will use a lot of
+space as each vertex will store a hashmap with $|V|$ entries where each key is
+a destination label using $O(log(n))$ bit.
+
+Thus the space consumed at each node is $\Omega (n\; log\; n)$. This space
+complexity renders our naive approach useless as we can not scale it.
+
+In order to reduce memory and ensure for routing costs that are proportional
+to distances, there are two parameters that routing schemes try to minimize.
+\begin{description}
+  \item[Stretch] The max ratio over all source-destination pairs between the
+      cost of the path taken by the routing scheme and the cost of a min
+      cost path.
+  \item[Memory] The max number of bits over all nodes stored for the routing
+      scheme. (ballanced is preferred)
+\end{description}
+Given an weighted undirected graph $G=(V,E)$ with $|V|=n$ vertices and $|E|=m$
+edges. This article presents a routing scheme that uses $\tilde{O}(\sqrt(n))$
+routing table space per vertex, and routes along paths of stretch-3.
+
+\section{Labeled Routing or Name-Independent Routing}
+In the literature we distinguish between \emph{labeled routing} or
+\emph{name-independent routing}. To illustrate the differences lets look at a
+grid and imagine that the intersections is vertices and the lines are edges.
+
+In labeled routing we are allowed to label the vertices ourself. This allows
+us to give every vertex a label representing the $(x,y)$-coordinate of that
+vertex. This way we encode topological information into the label names and we
+can easily navigate in the graph by forwarding messages to desired port. In
+this scenario the available ports for each vertex would be a subset of $\{+y,
+-y, +x, -x\}$. \autoref{fig:labeledrouting} illustrates this scenario.
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[scale=0.3]{images/xyrouting.png} 
+    \label{fig:labeledrouting}
+\end{figure}
+
+In contract, when doing name independent routing an adversary will label the
+vertices. If the labeling is done randomly
 
 
-
-% \begin{frame}{XY-routing}
-%   \begin{figure}
-%     \includegraphics[scale=0.3]{images/xyrouting.png} 
-%   \end{figure}
-% \end{frame}
-% 
-% \begin{frame}[fragile]
-%   \frametitle{Routing Scheme}
-%      
-%   \begin{block}{Example: Trivial routing on min cost paths}
-%       \begin{itemize}
-%         \item On each node, for each of the possible $(n-1)$ destinations,
-%         store a port number leading to the next node on a min cost path to the
-%         destination.
-%         \item Requires each node to store $\Omega (n\; log\; n)$ bits.
-%         \item Does not scale very well.
-%       \end{itemize}
-%   \end{block}
-% \end{frame}
-% 
-% \begin{frame}[fragile]
-%   \frametitle{Minimizing parameters}
-%   When working with routing, two factors are normally of interest:
-%   \begin{description}
-%     \item[Stretch] The max ratio over all source-destination pairs between the
-%         cost of the path taken by the routing scheme and the cost of a min
-%         cost path.
-%     \item[Memory] The max number of bits over all nodes stored for the routing
-%         scheme. (ballanced is preferred)
-%   \end{description}
-% \end{frame}
-% 
+ 
+ 
 % \begin{frame}[fragile]
 %   \frametitle{Labeled Routing or Name-Independent Routing}
 % 
