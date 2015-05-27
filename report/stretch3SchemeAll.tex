@@ -24,13 +24,13 @@ For any node $u$, let $T(u)$ denote a singlesource minimum-cost-path tree rooted
 
 \texttt{Proof}. By Property 3.1 for any node $w$ on the min cost path of $T(x)$ between $x$ and $y$ we have $x\in B(w)$. Thus every node $w$ on this path maintains $\mu(T(x),w)$
 
-\subsection{Storing}
+\subsection{Storing}\label{subsec:storing}
 Every node stores the following
 \begin{enumerate}
-    \item\label{it:item1} For every $w\in B(u)$, the name $w$ and the port name $u\rightarrow y$, where $(u\rightarrow y)$ is the port number to use to get to node $y$, which is the next hop on a min cost path from $u$ to $w$.
-    \item\label{it:item2} For every landmark node $\ell \in L$, routing information $\mu(T(\ell),u)$ and label $\lambda(T(\ell),\ell)$ of the tree $T(\ell)$.
-    \item\label{it:item3} For every node $x\in B(u)$, routing information $\mu(T(x),u)$ of the tree $T(x)$.
-    \item\label{it:item4} For every node v such that $c(u) = h(v)$, store one of the following two options that produces the minimum cost path out of the two:
+    \item For every $w\in B(u)$, the name $w$ and the port name $u\rightarrow y$, where $(u\rightarrow y)$ is the port number to use to get to node $y$, which is the next hop on a min cost path from $u$ to $w$.
+    \item For every landmark node $\ell \in L$, routing information $\mu(T(\ell),u)$ and label $\lambda(T(\ell),\ell)$ of the tree $T(\ell)$.
+    \item For every node $x\in B(u)$, routing information $\mu(T(x),u)$ of the tree $T(x)$.
+    \item For every node v such that $c(u) = h(v)$, store one of the following two options that produces the minimum cost path out of the two:
     \begin{enumerate}
         \item[a] Store the labels $<\lambda(T (\ell_v), \ell_v ), \lambda(T (\ell_v), v)>$. The routing path in this case would be from $u$ to $\ell_v \in B(v)$ using $\lambda(T (\ell_v), \ell_v)$ on the tree $T (\ell_v)$, and from $\ell_v$ to $v$ using $\lambda(T (\ell_v), v)$ on the same tree $T (\ell_v)$.
 
@@ -74,24 +74,24 @@ Routing from u to v is done in the following manner:
     Thus $d(s,z)+p(z,t) \leq d(s,z) + d(z,s) + d(s,t) \leq b(s)+b(s)+d(s,t)\leq 3d(s,t)$.
 \end{enumerate}
 The three cases is depicted in \autoref{fig:threecases}.
+
 \begin{figure}[htbp]
     \centering
     \includegraphics[scale=0.3]{images/threecases.png} 
-    \label{fig:threecases}
     \caption{An illustration of the three cases described in the analysis.}
+    \label{fig:threecases}
 \end{figure}
 
 
-
 \section{Results}
-The routing information stored at each node is bounded by
-\begin{itemize}
-    \item $\tilde{O}(\sqrt{n})$ for \ref{it:item1}, as $|B(u)| = \tilde{O}(\sqrt{n})$.
-    \item $\tilde{O}(\sqrt{n})$ for \ref{it:item2}, as each node will participate in $\tilde{O}(\sqrt{n})$ trees and thus its total tree routing information is of size $\tilde{O}(\sqrt{n})$ by Lemma 3.3.
-    \item $\tilde{O}(\sqrt{n})$ for \ref{it:item3}, by the same logic as for the above.
-    \item $\tilde{O}(\sqrt{n})$ for \ref{it:item4}, as for a node $u$ the number of nodes $v$ such that $c(u) = h(v)$ is bound by $\tilde{O}(\sqrt{n})$ (by the property 3.2 and the assumption of the hashing being balanced), and the lables stored are of $\tilde{O}(1)$ size.
-\end{itemize}
-giving the a total bound of size of $\tilde{O}(\sqrt{n})$.
+The routing information stored at each node in \ref{subsec:storing} is bounded by
+\begin{enumerate}
+    \item $\tilde{O}(\sqrt{n})$ as $|B(u)| = \tilde{O}(\sqrt{n})$.
+    \item $\tilde{O}(\sqrt{n})$ as each node will participate in $\tilde{O}(\sqrt{n})$ trees and thus its total tree routing information is of size $\tilde{O}(\sqrt{n})$ by Lemma 3.3.
+    \item $\tilde{O}(\sqrt{n})$ by the same logic as for the above.
+    \item $\tilde{O}(\sqrt{n})$ as for a node $u$ the number of nodes $v$ such that $c(u) = h(v)$ is bound by $\tilde{O}(\sqrt{n})$ (by the property 3.2 and the assumption of the hashing being balanced), and the lables stored are of $\tilde{O}(1)$ size.
+\end{enumerate}
+giving the a total bound on size of $\tilde{O}(\sqrt{n})$.
 
 The described stretch 3 scheme has the following bounds:
 \begin{description}
