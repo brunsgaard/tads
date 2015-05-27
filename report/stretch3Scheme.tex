@@ -2,7 +2,12 @@
 We shall firstly introduce a stretch 3 scheme for complete graphs and then generalize this to generic graphs.
 
 \subsection{Vicinity Balls}
-We introduce vicinity balls as the notion of areas containing the $k$ closest nodes. For every integer $k \geq 1$, and for a node $u \in V$, let the \textit{vicinity} of $u$, denoted by $B_k(u)$, be the set consisting of $u$ and the $k$ closest nodes to $u$.
+We introduce vicinity balls as the notion of areas containing the $k$ closest nodes. For every integer $k \geq 1$, and for a node $u \in V$, let the \textit{vicinity} of $u$, denoted by $B_k(u)$, be the set consisting of $u$ and the $k$ closest nodes to $u$.\\
+
+\texttt{Property 3.1 (Awerbuch Et Al. 1990)}. \textit{If $v\in B_k(u)$ and $w$ is on a min cost path from $u$ to $v$, then $v\in B_k(w)$}.
+
+\texttt{Proof}. Suppose $v\not\in B_k(w)$. For any $z\in B_k(w)$, we have distnace $d(w,z) < d(w,v)$ (or $d(w,z) = d(w,v)$ and $z < v$, i.e. $z$ is chosen before $v$). We have that $d(u,z) < d(u,w) + d(w,v)$. Since $w$ is on a min cost path from $u$ to $v$, $d(u,z) < d(u,v)$ and hence $B_k(w) \subset B_k(u)$. But since $B_k(u) \backslash B_k(w)$ we have that $|B_k(w)| < |B_k(u)|$, a contradiction.
+%TODO maybe include example
 
 Set $k=[4 \sqrt{n}log\; n]$ and denote $B(u) = B_k(u)$. Denote $b(u)$ the radius of $B(u)$, $b(u)=max_{w\in B(u)} d(u,w)$.
 
@@ -14,10 +19,34 @@ Partition nodes into the color sets $C_1,\dots,C_{\sqrt{n}}$, with the following
     \item Every node has in its vicinity at least one node from every color-set.
 \end{enumerate}
 
-If node $u\in C_i$, it has ``color $i$'' and we denote this $c(u)=i$. The coloring can be done in polynomial time.
+If node $u\in C_i$, it has ``color $i$'' and we denote this $c(u)=i$. If every node independently chooses a random color, the properties holds with high probability by Chernoff bounds and union bound. It can also be derandomized, as shown in the following section.
+%TODO maybe prove this
 
-If every node independently chooses a random color, the properties holds with high probability.
-%TODO prove this
+\subsubsection{Polynomial Time Coloring}
+The coloring can be derandomized via the method of conditional probabilities using pessimistic estimators, to show that the coloring can be constructed in polynomial time with the properties satisfied.
+
+Let $C = \{ 1,\dots,\sqrt{n}\}$ and let the randomized algorithm be as follows:
+\begin{itemize}
+    \item For every $v \in V$ and $c \in C$ let $b_{v,c}$ be a binary random variable, equal 0 iff there exists a $u \in B(v)$ with $c(u) = c$. Note that for any $b_{v,c}$, $E[b_{v,c}] = Pr[b_{v,c} > 0] \leq (1 - \frac{1}{\sqrt{n}})^k = (1 - \frac{1}{\sqrt{n}})^{4 \sqrt{n}\;log\;n} \leq n^{-4}$ (by directly applying the terms). Thus this represents the second property. 
+    \item For every $c\in C$ let $e_c$ be a binary random variable equal 0 iff $|\{u| c(u) = c\}| \leq 2\sqrt{n}$. Thus this represents a bound on the number of nodes sharing the same color, i.e. the first property.
+    \item For every $c\in C$ and $v\in V$ let $f_{c,v}$ be a binary random variable equal 1 iff $c(v) = c$. Thus this is an indicator variable on whether a node $v$ has color $c$.
+\end{itemize}
+
+The derandomization follows from \cite{compactNameIndepRouting}[37:8-37:9] and can be done in $\tilde{O}(n^2)$ time.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%Removed due to basically c/p of article%%%%%%%%%%%%%%%%
+%Using Chernoff bounds we have that:
+%\begin{equation} \label{eq:eq1}
+%Pr[e_c > 0] \leq Pr[\sum_{v\in V} f_{c,v} > 2\sqrt{n}] < \alpha E[e^{t\sum_{v\in V} f_{c,v}}]
+%\end{equation}
+%for $t = ln 2$ and $\alpha = e^{-2t\sqrt{n}}$. Note that $\alpha E[e^{t\sum_{v\in V} f_{c,v}}]$ is a pessimistic estimator for $e_c$. Also note that we seek a very low probability for $Pr[e_c > 0]$, indicating that property 1 holds with high probability.
+
+%Let $A = \sum_{v\in V, c\in C}b_{v,c} + \alpha \sum_{c\in C}e^{t\sum_{v\in V} f_{c,v}}$.
+
+%When no node is colored yet, using union and Chernoff bounds shows that $E[A] < 1$. For any partial ocloring, $E[A]$ can be computed in polynomial time. Any partial coloring can be exteded by a node with a color that does not increase $E[A]$. Since Eq. \eqref{eq:eq1} is true for any partial coloring, for the full coloring we get $\sum b_{v,c} + \sum e_c < E[A] < 1$, as required by the method of conditional probabilities with pessimistic estimators.
+
+%Computing this derandomization can be done in $\tilde{O}$ time as follows: For each of the $n$ stages in the process we are given a partial coloring that induces some value $A$ and an uncolored node $u$. For each color $c\in C$, we need to compute
+
 
 \subsection{Hashing Names To Colors}
 Assuming a mapping $h$ from node names to colors is balanced such that at most $O(\sqrt{n})$ names map to the same color. Each node $u\in V$ should be able to compute $h(w)$ for any destination $w$ in constant time. Note that this hashing is for node names and not the node itself. Thus a node now has a node color and a name color.
