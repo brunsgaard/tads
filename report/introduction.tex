@@ -2,30 +2,34 @@
 
 Routing is one of the most fundamental problems in the area of distributed
 networking. The goal in this problem is to find a distributed algorithm that
-allows any source vertex $v$ in a network $G=(V,E)$ to route messages to any
-destination vertex $u$, where $u, v\in V$.
+allows any source vertex $v$ in a network $G=(V,E,\omega)$ to route messages
+to any destination vertex $u$, where $u, v\in V$.
+
+Each node $v \in V$ is given a unique name with $O(log\; n)$ bits. Also
+for each vertex, each outgoing edge is given a unique port number in
+$\{1,\dots,deg(v)\}$.
 
 Formally, a routing scheme is comprised of two phases. The first phase is
 called the preprocessing phase. In this phase $G$ is preprocessed and the
 derived routing information is stored locally with the relevant vertices.
 
-In the second phase - the routing phase - the routing scheme allows any vetex
-to route messages to any vertex in a distributed manner only based on label of
-the destination vertex.
+In the second phase - the routing phase - the routing scheme allows any vertex
+to route messages to any vertex in a distributed manner only based on the
+label of the destination vertex.
 
 A naive approach to routing, is to preprocess a graph by running a SSSP
 algorithm from each vertex $v \in V$ and at each vertex $v$ store a hashmap
-mapping any vertex in $V$ to an outgoing edge from $v$, also
-referred to as a port.
+mapping any vertex in $V$ to a port number.
 
 In the routing phase a vertex will only need to look at the destination label
 of the message. If the destination label match the one of the vertex then we
-are done, otherwise lookup what port to use and forwarding the message.
+are done, otherwise we lookup what forwarding port for the destination vertex
+and forwarding the message.
 
-This approach will ensure a routing of stretch-1, and the lookup performed at
+This approach will ensure a routing of stretch-1 (a min cost path) and the lookup performed at
 each vertex can be done in constant time. But this approach will use a lot of
-space as each vertex will store a hashmap with $|V|$ entries where each key is
-a destination label using $O(log(n))$ bit.
+space as each vertex will store a hashmap with $n$ entries where each key is a
+destination label using $O(log(n))$ bit.
 
 Thus the space consumed at each node is $\Omega (n\; log\; n)$. This space
 complexity renders our naive approach useless as we can not scale it.
@@ -37,13 +41,12 @@ to distances, there are two parameters that routing schemes try to minimize.
       cost of the path taken by the routing scheme and the cost of a min
       cost path.
   \item[Memory] The max number of bits over all nodes stored for the routing
-      scheme. (ballanced is preferred)
+      scheme. (balanced is preferred)
 \end{description}
-Given an weighted undirected graph $G=(V,E)$ with $|V|=n$ vertices and $|E|=m$
-edges. This article presents a routing scheme that uses $\tilde{O}(\sqrt(n))$
+This article presents a routing scheme that uses $\tilde{O}(\sqrt(n))$
 routing table space per vertex, and routes along paths of stretch-3.
 
-\section{Labeled Routing or Name-Independent Routing}
+\section*{Labeled Routing or Name-Independent Routing}
 In the literature we distinguish between \emph{labeled routing} or
 \emph{name-independent routing}. To illustrate the differences lets look at a
 grid and imagine that the intersections is vertices and the lines are edges.
@@ -60,45 +63,9 @@ this scenario the available ports for each vertex would be a subset of $\{+y,
     \label{fig:labeledrouting}
 \end{figure}
 
-In contract, when doing name independent routing an adversary will label the
-vertices. If the labeling is done randomly
+In contract, when doing name independent routing, an adversary will label the
+vertices. If the labeling is done randomly it will hold no routing information
+and we can't use the label names to navigate. Thus, we need some kind of
+technique to figure out what port to use for message forwarding. 
 
-
- 
- 
-% \begin{frame}[fragile]
-%   \frametitle{Labeled Routing or Name-Independent Routing}
-% 
-%   In labeled routing we can choose a label for each vertex.
-%   Lets use coordinates. Now we can easily route. If an aversery
-%   label the vertices randomly, routing gets harder.
-% 
-%   \begin{figure}
-%     \includegraphics[scale=0.3]{images/xyrouting.png} 
-%   \end{figure}
-% \end{frame}
-% 
-% 
-% 
-% 
-% \begin{frame}[fragile]
-%   \frametitle{Name-Independent Rounting with min stretch}
-%     Given a weighted undirected network with arbitrary node names, we present
-%     a compact routing scheme, using a $\tilde{O}(\sqrt{n})$ space routing
-%     table at each node and routing along paths of stretch 3.
-% 
-%     It is known that no compact routing using $o(n)$ space per node can route
-%     with stretch below 3. Also, it is known that any stretch below 5 requires
-%     $\Omega(\sqrt{n})$ space per node.
-% \end{frame}
-% 
-% \begin{frame}[fragile]
-%   \frametitle{Setup}
-%     Consider an $n$-node weighted undirected graph $G=(V,E,\omega)$.
-% 
-%     Each node $v\in V$:
-%     \begin{itemize}
-%         \item is given a unique name with $O(log\; n)$ bits.
-%         \item each outgoing edge is given a unique port name in $\{1,\dots,deg(v)\}$.
-%     \end{itemize}
-% \end{frame}
+The routing scheme presented in this report is name independent.
