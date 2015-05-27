@@ -1,4 +1,13 @@
-\documentclass[a4paper,final]{memoir}
+\documentclass[a4paper,final, openany]{memoir}
+
+%removes newpages between ending chapters (because of duplex)
+\usepackage{lipsum} %only for the example
+\usepackage{etoolbox}
+\makeatletter
+\patchcmd{\@smemmain}{\cleardoublepage}{\clearpage}{}{}
+\patchcmd{\@smemmain}{\cleardoublepage}{\clearpage}{}{}
+\makeatother
+
 
 %\setlength{\parindent}{0pt}
 % Language and encoding
