@@ -43,7 +43,7 @@ to distances, there are two parameters that routing schemes seek to minimize.
       scheme. (balanced is preferred)
 \end{description}
 This article presents a routing scheme that uses $\tilde{O}(\sqrt(n))$
-routing table space per vertex, and routes along paths of stretch-3. $\tilde{O}()$ abstracts away factors of logarithmic size, just like $O()$ abstracts away constants.
+routing table space per vertex, and routes along paths of stretch-3. Note that $\tilde{O}()$ abstracts away factors of logarithmic size, just like $O()$ abstracts away constants.
 
 \section*{Labeled Routing or Name-Independent Routing}
 In the literature we distinguish between \emph{labeled routing} or
@@ -70,6 +70,8 @@ technique to figure out what port to use for message forwarding at each vertex.
 In this article we present a compact name-independent routing scheme with minimum stretch.
 %TODO describe compactness
 
-This scheme requires (uses) rewritable packet headers (which all previous name-independent schemes also do), as a scheme that does not rewrite packet headers must be loop free and thus must have a stretch of 1 on any tree. This however means that it cannot be compact, by Lemma 2.1 \cite{compactNameIndepRouting}[37:4]. A lower bound for compact labeled routing by Gavoille and Gengler [2001] shows that any stretch $< 3$ scheme must use a total of $\Omega(n^2)$ bits. Thus it cannot be that all nodes use only $o(n)$ bits (at least one must use more. This bound also holds for name-independent routing. An even stronger memory bound of $\Omega(n^2\log\;n)$ bits for stretch $< 3 $ can be proven for the name-independent scheme. Lemma 2.2 \cite{compactNameIndepRouting}[37:4] shows that for at name-independent routing scheme with $o(n\;log\;n)$ bits per node must have stretch at least 3.
+This scheme requires (uses) rewritable packet headers (which all previous name-independent schemes also do), as a scheme that does not rewrite packet headers must be loop free and thus must have a stretch of 1 on any tree. This however means that it cannot be compact, by Lemma 2.1 \cite{compactNameIndepRouting}[37:4]. A lower bound for compact labeled routing by Gavoille and Gengler [2001] shows that any stretch $< 3$ scheme must use a total of $\Omega(n^2)$ bits. Thus it cannot be that all nodes use only $o(n)$ bits (at least one must use more. This bound also holds for name-independent routing. Actually, Gavoille and Gengler [2001] imply that compact routing schemes with stretch 3 and requires at least $\Omega(\sqrt{n})$. bits per node.
 
-The presented compact name-independent routing scheme is indeed with minimum stretch 3.
+%An even stronger memory bound of $\Omega(n^2\log\;n)$ bits for stretch $< 3 $ can be proven for the name-independent scheme. Lemma 2.2 \cite{compactNameIndepRouting}[37:4] shows that for at name-independent routing scheme with $o(n\;log\;n)$ bits per node must have stretch at least 3.
+
+Thus it is known that no compact routing using $o(n)$ space per node can route with stretch below 3. The presented compact name-independent routing scheme is indeed with minimum stretch 3 using $\tilde{O}(\sqrt(n))$ bits per node.
