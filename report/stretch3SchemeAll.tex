@@ -73,6 +73,14 @@ Routing from u to v is done in the following manner:
     \item \textit{The source and atarget vicinities are close}: There exists a min cost path in which every node is in $B(s)\cup B(t)$. Let $(x,y)$ be an edge on this path such that $x\in B(s)$ and $y\in B(t)$. From 4(b), the cost $d(s,z)+p(z,t)$ of the path taken is bounded by the cost of path $s\leadsto z\leadsto x\rightarrow y \leadsto t$.\\
     Thus $d(s,z)+p(z,t) \leq d(s,z) + d(z,s) + d(s,t) \leq b(s)+b(s)+d(s,t)\leq 3d(s,t)$.
 \end{enumerate}
+The three cases is depicted in \autoref{fig:threecases}.
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[scale=0.3]{images/threecases.png} 
+    \label{fig:threecases}
+    \caption{An illustration of the three cases described in the analysis.}
+\end{figure}
+
 
 
 \section{Results}
