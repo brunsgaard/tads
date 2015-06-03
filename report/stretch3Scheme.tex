@@ -8,16 +8,19 @@ nodes. For every integer $k \geq 1$, and for a node $u \in V$, let the
 \textit{vicinity} of $u$, denoted by $B_k(u)$, be the set consisting of $u$
 and the $k$ closest nodes to $u$.\\
 
-\texttt{Property 3.1 (Awerbuch Et Al. 1990)}. \textit{If $v\in B_k(u)$ and $w$
+%TODO cite
+\texttt{Property 3.1 (Awerbuch Et Al. 1990)}. \textit{If $v\in B_k(u)$ and $w$ 
 is on a min cost path from $u$ to $v$, then $v\in B_k(w)$}.
 
 \texttt{Proof}. Suppose $v\not\in B_k(w)$. For any $z\in B_k(w)$, we have
 distance $d(w,z) < d(w,v)$ (or $d(w,z) = d(w,v)$ and $z < v$, i.e. $z$ is
 chosen before $v$). We have that $d(u,z) < d(u,w) + d(w,v)$. Since $w$ is
 on a min cost path from $u$ to $v$, $d(u,z) < d(u,v)$ and hence $B_k(w)
-\subset B_k(u)$. But since $B_k(u) \backslash B_k(w)$ we have that $|B_k(w)| <
+\subset B_k(u)$. But since $v\in B_k(u) \backslash B_k(w)$ we have that $|B_k(w)| <
 |B_k(u)|$, a contradiction.
 %TODO maybe include example
+
+\qed
 
 Set $k=[4 \sqrt{n}log\; n]$ and denote $B(u) = B_k(u)$. Denote $b(u)$ the
 radius of $B(u)$, $b(u)=max_{w\in B(u)} d(u,w)$.
@@ -43,22 +46,22 @@ The coloring can be derandomized via the method of conditional probabilities
 using pessimistic estimators, to show that the coloring can be constructed in
 polynomial time with the properties satisfied.
 
-Let $C = \{ 1,\dots,\sqrt{n}\}$ and let the randomized algorithm be as
-follows:
-\begin{itemize}
-    \item For every $v \in V$ and $c \in C$ let $b_{v,c}$ be a binary
-        random variable, equal 0 iff there exists a $u \in B(v)$ with
-        $c(u) = c$. Note that for any $b_{v,c}$, $E[b_{v,c}] = Pr[b_{v,c}
-        > 0] \leq (1 - \frac{1}{\sqrt{n}})^k = (1 - \frac{1}{\sqrt{n}})^{4
-        \sqrt{n}\;log\;n} \leq n^{-4}$ (by directly applying the terms). Thus
-        this represents the second property.
-    \item For every $c\in C$ let $e_c$ be a binary random variable equal 0 iff
-        $|\{u| c(u) = c\}| \leq 2\sqrt{n}$. Thus this represents a bound on
-        the number of nodes sharing the same color, i.e. the first property.
-    \item For every $c\in C$ and $v\in V$ let $f_{c,v}$ be a binary random
-        variable equal 1 iff $c(v) = c$. Thus this is an indicator variable on
-        whether a node $v$ has color $c$.
-\end{itemize}
+%Let $C = \{ 1,\dots,\sqrt{n}\}$ and let the randomized algorithm be as
+%follows:
+%\begin{itemize}
+%    \item For every $v \in V$ and $c \in C$ let $b_{v,c}$ be a binary
+%        random variable, equal 0 iff there exists a $u \in B(v)$ with
+%        $c(u) = c$. Note that for any $b_{v,c}$, $E[b_{v,c}] = Pr[b_{v,c}
+%       > 0] \leq (1 - \frac{1}{\sqrt{n}})^k = (1 - \frac{1}{\sqrt{n}})^{4
+%        \sqrt{n}\;log\;n} \leq n^{-4}$ (by directly applying the terms). Thus
+%        this represents the second property.
+%    \item For every $c\in C$ let $e_c$ be a binary random variable equal 0 iff
+%        $|\{u| c(u) = c\}| \leq 2\sqrt{n}$. Thus this represents a bound on
+%        the number of nodes sharing the same color, i.e. the first property.
+%    \item For every $c\in C$ and $v\in V$ let $f_{c,v}$ be a binary random
+%        variable equal 1 iff $c(v) = c$. Thus this is an indicator variable on
+%        whether a node $v$ has color $c$.
+%\end{itemize}
 
 The derandomization follows from \cite{compactNameIndepRouting}[37:8-37:9] and
 can be done in $\tilde{O}(n^2)$ time.
