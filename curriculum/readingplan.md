@@ -6,11 +6,11 @@
 
 ## 9. june
  - (OS) Algorithms for the symmetric traveling salesman problem
- - (Bob Tarjan [Turing Award Winner], Princeton) Hollow Heaps
  - (CWN) Fully-Dynamic Minimum Spanning Forest
  - (CWN) Maximum Flow in Planar Graphs
 
 ## 10. june
+ - (Bob Tarjan [Turing Award Winner], Princeton) Hollow Heaps
  - (PW) Kinetic Data Structures
  - (PW) Kinetic Alpha Complexes and Applications
 
