@@ -1,0 +1,33 @@
+Curriculum
+
+(MT) Distance oracles in undirected graphs
+At the exam I will expect you to know the construction for the metric case where the input is a complete distance matrix.. the rest is cursory.
+
+22/4: (MT) Distance oracles in planar graphs
+At the exam I expect you to know the reachability oracle - the rest is cursory.
+
+27/4: (SA) Decremental connectivity in trees
+For the paper "Optimal Online Deremental Connetivity in Trees" you should know the whole paper, wheras for "Nearest Common Ancestors: A Survey and a New Algorithm for a Distributed Environment" its only chapter 4.
+
+
+29/4: (Ola Svensson, EPFL) Algorithms for the symmetric traveling salesman problem
+For the exam I expect you to know Christofides 1.5 approximation MST algorithm. The rest is cursory.
+
+
+4/5: (PW) Kinetic Data Structures
+
+6/5: (PW) Kinetic Alpha Complexes and Applications
+
+
+
+11/5: (CWN) Fully-Dynamic Graph Connectivity
+
+
+13/5: (Bob Tarjan [Turing Award Winner], Princeton) Hollow Heaps
+
+
+18/5: (CWN) Fully-Dynamic Minimum Spanning Forest
+
+
+20/5: (CWN) Maximum Flow in Planar Graphs
+
